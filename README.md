@@ -29,6 +29,7 @@ These filter/mapping all fail.
 
 - `-map 0:v -map 0:a:0 -target ntsc-dv -t 6.08`
 - `-map 0:v -c:v copy -filter_complex '[0:a:0]aresample=48000[s1]' -map '[s1]'`
+- `-f lavfi -i testsrc=r=29.97:s=720x480 -map 1:v -map 0:a:0 -target ntsc-dv -t 10`
 
 ### Success cases
 
@@ -37,6 +38,7 @@ These run fine
 
 - `-map 0:v -map 0:a:0 -target ntsc-dv -t 6.07`
 - `-map 0:v -c:v copy -filter_complex '[0:a:0]afftdn[s0];[s0]aresample=48000[s1]' -map '[s1]'`
+- `-f lavfi -i anullsrc=r=48000:cl=stereo -map 0:v -map 1:a -target ntsc-dv -t 10`
 
 ## A Workaround
 
@@ -53,7 +55,10 @@ The second line merges video channel from the dv file and audio channel from tmp
 
 ## What happens?
 
-You may notice there are magic numbers 6.07 or 6.08 (sec) with `-t` option.
-This option terminates the output movie by the specified length.
+Findings are:
+
+- Error is in audio handling.
+- Movies shorter than 6.08 sec escape this error.
 The length are **invariant across erroneous dv files**.
 
+I am looking into the source code, but the issue is not found yet.
