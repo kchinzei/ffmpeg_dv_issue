@@ -100,7 +100,7 @@ Findings are:
 - Error is in audio handling.
 - It fails [here (line 270 of libavutil/fifo.c)](https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/fifo.c).
 - Movies shorter than 6.07 sec escape this error.
-The length are ***invariant across erroneous dv files***.
+The length is ***invariant across erroneous dv files***.
 
 Most likely, some defect in dv file resulted this.
 My example is captured from very old - in 1996 - tape,
