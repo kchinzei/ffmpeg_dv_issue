@@ -1,10 +1,10 @@
 # FFmpeg dv Issue
 
-FFmpeg occasionally has an error in certain dv files.
+FFmpeg occasionally has an error to read and write certain dv files.
 This is my note and intended to test it with sample movie.
 
 - I tested it using ffmpeg version 6.1.1 built with Apple clang version 15.0.0 (clang-1500.3.9.4).
-- [`sample_err.dv`](./sample_err.dv) is from my old DV tape, captured and splitted following [Léo Bernard's Blog "Capturing and Archiving MiniDV Tapes on macOS"](https://leolabs.org/blog/capture-minidv-on-macos/).
+- [`sample_err.dv`](./sample_err.dv) is from my old DV tape, captured and split following [Léo Bernard's Blog "Capturing and Archiving MiniDV Tapes on macOS"](https://leolabs.org/blog/capture-minidv-on-macos/).
 
 A simple ffmpeg command to copy input to output
 
@@ -22,7 +22,7 @@ Abort trap: 6
 
 Problem is shown as `Assertion cur_size >= size failed at libavutil/fifo.c:2703`.
 
-Misteriously, this does not always happen.
+Mysteriously, this does not always happen.
 Some dv file goes fine.
 
 ### Fail cases
@@ -104,5 +104,5 @@ The length is ***invariant across erroneous dv files***.
 
 Most likely, some defect in dv file resulted this.
 My example is captured from very old - in 1996 - tape,
-so it is likely with errors.
+so it is likely with aging errors.
 I am looking into the source code, but the issue is not found yet.
