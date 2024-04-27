@@ -57,6 +57,11 @@ Use the generated test pattern as the video stream.
 Audio is copied from the input file.
 )
 
+#### ffmpeg 7
+
+Ffmpeg 7 (7.0, built with Apple clang version 15.0.0 (clang-1500.3.9.4)) fail also,
+but at different timing other than `-t 6.08`.
+
 ### Success cases
 
 These run fine
@@ -86,12 +91,19 @@ Video is copied from the input file.
 This works
 
 ```bash
-> ffmpeg -i sample_err.dv -map 0:a:0 -f s16le tmp.wav
+> ffmpeg -i sample_err.dv -map 0:a:0 -f s16le -ar 48000 tmp.wav
 > ffmpeg -i sample_err.dv -f s16le -i tmp.wav -map 0:v -map 1:a -target ntsc-dv out.dv
 ```
 
-The first line writes the audio in tmp.wav.
+The first line writes the audio in tmp.wav with 48 resampling.
 The second line merges video stream from the dv file and audio in tmp.wav.
+
+It fails when input sampling rate is specified (below).
+```bash
+> ffmpeg -i sample_err.dv -f s16le -ar 48000 -i tmp.wav -map 0:v -map 1:a -target ntsc-dv out.dv
+> ...
+> Assertion cur_size >= size failed at libavutil/fifo.c:270
+```
 
 ## What happens?
 
